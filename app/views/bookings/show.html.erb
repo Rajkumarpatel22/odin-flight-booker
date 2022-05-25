@@ -1,0 +1,7 @@
+<h1>Booking information</h1>
+<h3>Booking for flight: <%= link_to @flight.from_airport_id, flight_path(@flight) %> </h3>
+<h3>Passenger details: </h3>
+<% @booking.passengers.each do |p| %>
+  <h5><%= p.name %></h5>
+<% end %>
+<%= link_to "Back to root path",root_path %>

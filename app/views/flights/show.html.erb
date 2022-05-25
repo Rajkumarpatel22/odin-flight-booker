@@ -1,0 +1,8 @@
+<h1>Flight Data</h1>
+<h3>Flight departure airport code : <%= @flight.from_airport.code %></h3>
+<h3>Flight destination airport code : <%= @flight.to_airport.code %></h3>
+<h3>Flight departure id: <%= @flight.from_airport_id %></h3>
+<h3>Flight destination id: <%= @flight.to_airport_id %></h3>
+<h3>Flight duration: <%= @flight.duration %> Hours </h3>
+<h3>Flight is scheduled on: <%= @flight.start.to_date %></h3>
+<%= link_to "Back to root path", root_path %>

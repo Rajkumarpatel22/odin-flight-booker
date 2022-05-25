@@ -1,0 +1,13 @@
+<%= form_for @booking do |f| %>
+  <% i = 1 %>
+  <%= f.fields_for :passengers do |passenger| %>
+    <%= "Passenger #{i}" %><br />
+    <%= passenger.label :name, "Name" %>
+    <%= passenger.text_field :name %><br />
+    <%= passenger.label :email,"Email" %>
+    <%= passenger.email_field :email %><br />
+    <% i+=1 %>
+  <% end %>
+  <%= f.hidden_field :flight_id, value: @flight.id %>
+  <%= f.submit "Confirm Tickets" %>
+<% end %>

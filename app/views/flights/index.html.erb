@@ -1,0 +1,40 @@
+
+
+
+<h1>Flights</h1>
+<%= form_with url: "/flights", method: :get do %>
+<% @airports = Airport.all.map{|ap| [ap.code,ap.id]}.uniq{|ap| ap[0]} %>
+<% @flight_dates = Flight.all.map{|flight| [flight.start.to_date,flight.start]}.uniq{|flight| flight[0]} %>
+<% @seats = [[1,1],[2,2],[3,3],[4,4]] %>
+ <%= select_tag(:from_airport_id,options_for_select(@airports),{prompt: "From?"}) %><br />
+ <%= select_tag(:to_airport_id,options_for_select(@airports),{prompt: "To?"}) %><br />
+<%= select_tag(:flight_dates,options_for_select(@flight_dates),{prompt: "Date?"}) %><br />
+<%= select_tag(:passenger_seats,options_for_select(@seats),{prompt: "No of passengers?"}) %><br />
+<%= submit_tag "Search" %>
+<% end %>
+<% unless @available_flights.nil? %>
+<%  @available_flights.each do |flight| %>
+  <%= flight.from_airport.code %>
+  <%= flight.to_airport.code %>
+<% end %>
+<%end%>
+<h3>Fill the booking details </h3>
+<% unless @available_flights.nil? %>
+  <%= form_with url: "/bookings/new", method: :get do |form| %>
+    <% @available_flights.each do |flight| %>
+    booking_destination:   <%= form.label :booking_destination,flight.to_airport.code %><br> 
+    booking_departure:     <%= form.label :booking_departure, flight.from_airport.code %><br>
+
+
+      <span>Want to book ticket click radio button:<span> <%= form.radio_button :flight_id, flight.id %><br>
+    <% end %>
+    <%= form.hidden_field :seat, value: @seat %>
+    <%= form.submit "Book" %>
+  <%end %>
+<% end %>
+
+
+
+
+
+   
