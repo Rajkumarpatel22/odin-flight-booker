@@ -8,14 +8,21 @@ class BookingsController < ApplicationController
   
     def create
       @booking = Booking.new(booking_params)
+     
+
       if @booking.save
+        @booking.passengers.each do |pass|
+          PassengerMailer.confirmation_email(pass, @booking).deliver_now!
+        end
+  
+        flash[:success] = "Booking successful!"
         redirect_to booking_path(@booking)
-        
-      
-      else  
+      else
+        flash[:danger] = "Flight booking error! #{@booking.errors.messages}"
         render :new
       end
     end
+  
   
     def show
       @booking = Booking.find(params[:id])
